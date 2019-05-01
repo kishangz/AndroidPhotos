@@ -1,11 +1,10 @@
 package com.example.androidphotos95;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,12 +12,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Photos extends AppCompatActivity {
 
     private ListView listView;
-    private ArrayList<Album> albums;
+    public static ArrayList<Album> albums = new ArrayList<>();
+    public static Album selectedAlbum = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +25,16 @@ public class Photos extends AppCompatActivity {
         setContentView(R.layout.photos);
 
         listView = findViewById(R.id.album_list);
-        albums = new ArrayList<>();
+
         ArrayAdapter<Album> adapter =
                 new ArrayAdapter<>(this, R.layout.list_item, albums);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(
+                (parent,view,pos,id) -> {
+                    selectedAlbum = albums.get(pos);
+                    Intent intent = new Intent(this, ShowAlbum.class);
+                    startActivity(intent);
+                });
 
         FloatingActionButton add = findViewById(R.id.add_album_button);
         add.setOnClickListener(new View.OnClickListener() {

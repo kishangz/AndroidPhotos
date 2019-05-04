@@ -5,25 +5,21 @@ import android.media.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+
+import android.net.Uri;
 import java.util.ArrayList;
 
 public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String photoName;
-    private File f;
+
+    private Uri u;
     private ArrayList<Tag> listOfTags;
 
-    public Photo(String photoName, File f) {
-        try {
-            this.photoName = f.getCanonicalPath();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        this.f = f;
+    public Photo(String photoName, Uri u) {
         this.listOfTags = new ArrayList<Tag>();
+        this.u = u;
     }
 
     public void addTag(Tag tag) {
@@ -68,12 +64,12 @@ public class Photo implements Serializable {
 
     }
 
-    public ArrayList<Tag> getTags(){
-        return this.listOfTags;
+    public Uri getUri() {
+        return u;
     }
 
-    public File getFile() {
-        return this.f;
+    public ArrayList<Tag> getTags(){
+        return this.listOfTags;
     }
 
     public String getPhotoName() {

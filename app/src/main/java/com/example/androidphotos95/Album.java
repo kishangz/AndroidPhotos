@@ -1,24 +1,23 @@
 package com.example.androidphotos95;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Album implements Serializable, Comparable<Album> {
 
     private static final long serialVersionUID = 1L;
     private String name;
-    private HashMap<String, Photo> photos;
+    private ArrayList<Photo> photos;
 
     public Album(String name) {
         this.name = name;
-        this.photos = new HashMap<String, Photo>();
+        this.photos = new ArrayList<Photo>();
 
     }
 
     public String getName() {
-
         return this.name;
-
     }
 
     public void setAlbumName(String name) {
@@ -26,20 +25,20 @@ public class Album implements Serializable, Comparable<Album> {
 
     }
 
-    public HashMap<String, Photo> getListOfPhotos(){
+    public ArrayList<Photo> getListOfPhotos(){
         return this.photos;
     }
 
-    public void setPhotoHashMap(HashMap<String, Photo> photos) {
+    public void setPhotoHashMap(ArrayList<Photo> photos) {
         this.photos = photos;
     }
 
     public void addPhoto(Photo photo) {
-        this.photos.put(photo.getPhotoName(), photo);
+        this.photos.add(photo);
     }
 
-    public void removePhoto(String photoName) {
-        this.photos.remove(photoName);
+    public void removePhoto(Photo photo) {
+        this.photos.remove(photo);
     }
 
     public String getAlbumSize() {

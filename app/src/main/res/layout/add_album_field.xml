@@ -6,9 +6,11 @@
     android:paddingHorizontal="20dp">
 
     <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent" android:layout_height="match_parent"
         android:id="@+id/edit_text"
-        android:background="@android:drawable/editbox_background">
-    </EditText>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:drawable/editbox_background"
+        android:inputType="text"
+        android:maxLines="1"></EditText>
 
 </LinearLayout>

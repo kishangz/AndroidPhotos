@@ -17,7 +17,7 @@ public class Photos extends AppCompatActivity {
 
     private ListView listView;
     public static ArrayList<Album> albums = new ArrayList<>();
-    public static Album selectedAlbum = null;
+    public static Album album = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class Photos extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(
                 (parent,view,pos,id) -> {
-                    selectedAlbum = albums.get(pos);
+                    album = albums.get(pos);
                     Intent intent = new Intent(this, ShowAlbum.class);
                     startActivity(intent);
                 });

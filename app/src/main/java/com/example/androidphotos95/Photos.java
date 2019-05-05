@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Photos extends AppCompatActivity {
 
@@ -50,8 +51,23 @@ public class Photos extends AppCompatActivity {
                         .setTitle("Add Album")
                         .setView(v)
                         .setPositiveButton("ADD", (dialog, id) -> {
+
+
+                            Iterator<Album> it = albums.iterator();
+                            while (it.hasNext()) {
+                                if(it.next().getName().equals(album_field.getText().toString())){
+                                    AlertDialog.Builder alert =
+                                            new AlertDialog.Builder(Photos.this);
+                                    alert.setMessage("An album with that name already exists.");
+                                    AlertDialog a = alert.create();
+                                    a.show();
+                                    return;
+                                }
+                            }
+
                             albums.add(new Album(album_field.getText().toString()));
-                            listView.setAdapter(new ArrayAdapter<Album>(Photos.this, R.layout.list_item, albums));})
+                            listView.setAdapter(new ArrayAdapter<Album>(Photos.this, R.layout.list_item, albums));
+                        })
                         .setNegativeButton("Cancel", (dialog, id) -> {});
 
                 AlertDialog dialog = builder.create();

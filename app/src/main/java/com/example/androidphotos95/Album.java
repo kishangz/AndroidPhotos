@@ -20,6 +20,7 @@ public class Album implements Serializable, Comparable<Album> {
         return this.name;
     }
 
+
     public void setAlbumName(String name) {
         this.name = name;
 

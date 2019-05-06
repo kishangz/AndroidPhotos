@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ShowPhotos"
+            android:label="@string/title_activity_show_photos"
+            android:parentActivityName=".ShowAlbum"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.androidphotos95.ShowAlbum" />
+        </activity>
+        <activity
             android:name=".ShowAlbum"
             android:label="@string/title_activity_show_album"
             android:parentActivityName=".Photos"

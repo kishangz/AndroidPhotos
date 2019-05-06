@@ -24,6 +24,7 @@ public class ShowAlbum extends AppCompatActivity {
 
     //public static ArrayList<Photo> photos = Photos.album.getListOfPhotos();
     public static ArrayList<Photo> photos = Photos.selectedAlbum.getListOfPhotos();
+    public static Photo selectedPhoto = null;
 
     private static final int IMAGE_REQUEST_CODE = 1;
 
@@ -50,6 +51,12 @@ public class ShowAlbum extends AppCompatActivity {
         GridView grid = findViewById(R.id.grid);
         GridAdapter image = new GridAdapter(ShowAlbum.this);
         grid.setAdapter(image);
+        grid.setOnItemClickListener(
+                (parent,view,pos,id) -> {
+                    selectedPhoto = photos.get(pos);
+                    Intent intent = new Intent(this, ShowPhotos.class);
+                    startActivity(intent);
+                });
     }
 
 /*

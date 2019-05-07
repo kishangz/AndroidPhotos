@@ -13,17 +13,15 @@
         android:title="Delete Album"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/searchItem"
+    <item
+        android:id="@+id/searchItem"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"
-        app:showAsAction="ifRoom"/>
-
+        app:showAsAction="always" />
     <item android:id="@+id/renameItem"
-        android:title="Rename"
-        app:showAsAction="never" />
+        android:title="Rename" />
 
     <item android:id="@+id/openItem"
         android:title="Open"
         app:showAsAction="never"/>
-
 </menu>

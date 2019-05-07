@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,8 @@ public class ShowAlbum extends AppCompatActivity {
 
     //public static ArrayList<Photo> photos = Photos.album.getListOfPhotos();
     public static ArrayList<Photo> photos = Photos.selectedAlbum.getListOfPhotos();
+    private Photo selectedPhoto;
+    private Album thisAlbum;
 
     private static final int IMAGE_REQUEST_CODE = 1;
 
@@ -31,7 +34,6 @@ public class ShowAlbum extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_album);
-        //setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -52,14 +54,43 @@ public class ShowAlbum extends AppCompatActivity {
         grid.setAdapter(image);
     }
 
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.album_menu, menu);
         return true;
     }
-*/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case R.id.deletePhoto:
+
+                //deletePhotoDialog();
+
+                break;
+            case R.id.displayItem:
+                openAlbum();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openAlbum() {
+        if(selectedPhoto!=null) {
+            //Intent openIntent = new Intent(getApplicationContext(), DisplayActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("selected_photo",selectedPhoto);
+            bundle.putSerializable("album", thisAlbum);
+            bundle.putSerializable("album_list", photos);
+            //openIntent.putExtras(bundle);
+            //startActivity(openIntent);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -71,6 +102,5 @@ public class ShowAlbum extends AppCompatActivity {
             grid.setAdapter(image);
         }
     }
-
 
 }

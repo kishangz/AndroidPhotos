@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +31,7 @@ public class Photos extends AppCompatActivity {
     //private ListView listView;
     private ListView albumsListView;
     //public static ArrayList<Album> albums = new ArrayList<>();
-    private ArrayList<Album> albumList = new ArrayList<Album>();
+    private static ArrayList<Album> albumList = new ArrayList<>();
     public static Album selectedAlbum = null;
     private ArrayAdapter<Album> albumArrayAdapter;
 
@@ -53,6 +54,10 @@ public class Photos extends AppCompatActivity {
         albumsListView.setAdapter(albumArrayAdapter);
         albumsListView.setOnItemClickListener( (p,v,pos,id) -> selectAlbum(pos) );
 
+    }
+
+    private void selectAlbum(Object pos) {
+        selectedAlbum = albumList.get((Integer) pos);
     }
 
     @Override
@@ -83,10 +88,6 @@ public class Photos extends AppCompatActivity {
         return null;
     }
 
-    private void selectAlbum(int pos) {
-        selectedAlbum = albumList.get(pos);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -94,32 +95,27 @@ public class Photos extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.setHeaderTitle("Rename or Delete");
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+    }
+
+
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
             case R.id.addItem: // User pressed add
                 createAlbumDialog();
                 break;
-            case R.id.deleteItem: // User pressed delete
-                if(selectedAlbum == null) {
-                    noAlbumSelectedDialog();
-                    break;
-                }
-                deleteAlbumDialog();
-                break;
-            case R.id.renameItem: // User pressed rename
-                if(selectedAlbum == null) {
-                    noAlbumSelectedDialog();
-                    break;
-                }
-                renameAlbumDialog();
-                break;
             case R.id.searchItem: // User pressed search
                 if(albumList.isEmpty()) {
                     Toast.makeText(getBaseContext(), "You have no albums", Toast.LENGTH_LONG).show();
                     break;
                 }
-                //searchAlbums();
+                searchAlbums();
                 break;
             case R.id.openItem: // User pressed open
                 if(selectedAlbum == null) {
@@ -127,6 +123,21 @@ public class Photos extends AppCompatActivity {
                     break;
                 }
                 openAlbum();
+                break;
+
+            case R.id.deleteItem: // User pressed delete
+                if(selectedAlbum == null) {
+                    noAlbumSelectedDialog();
+                    break;
+            }
+            deleteAlbumDialog();
+            break;
+            case R.id.renameItem: // User pressed rename
+                if(selectedAlbum == null) {
+                    noAlbumSelectedDialog();
+                    break;
+                }
+                renameAlbumDialog();
                 break;
         }
         // Not sure if this is needed
@@ -202,6 +213,15 @@ public class Photos extends AppCompatActivity {
 
         }
     }
+
+    private void searchAlbums() {
+        Intent searchIntent = new Intent(getApplicationContext(), SearchActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("album_list", albumList);
+        searchIntent.putExtras(bundle);
+        startActivity(searchIntent);
+    }
+
 
     private void deleteAlbumDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

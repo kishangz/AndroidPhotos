@@ -16,6 +16,8 @@ public class Album implements Serializable, Comparable<Album> {
 
     }
 
+    public Photo getPhoto(int i){return photos.get(i);}
+
     public String getName() {
         return this.name;
     }

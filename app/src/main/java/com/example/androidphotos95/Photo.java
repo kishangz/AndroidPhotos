@@ -1,5 +1,6 @@
 package com.example.androidphotos95;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import java.io.File;
@@ -13,19 +14,31 @@ public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String photoName;
-
+    private transient Bitmap image;
+    private transient Bitmap thumbnail;
+    private File file;
     private Uri u;
     private ArrayList<Tag> listOfTags;
+
 
     public Photo(String photoName, Uri u) {
         this.listOfTags = new ArrayList<Tag>();
         this.u = u;
     }
 
-    public void addTag(Tag tag) {
+    public Photo (Bitmap image,File file) {
+        this.image = image;
+        this.thumbnail = image;
+        this.file = file;
+    }
 
-        int tagListdex = getIndexForTagList(tag, 0);
-        this.listOfTags.add(tagListdex,tag);
+    public void addTag(String type, String value) {
+        Tag newTag = new Tag(type, value);
+        listOfTags.add(newTag);
+    }
+
+    public String getFile(){
+        return this.file.toString();
     }
 
     private int getIndexForTagList(Tag newTag, int i) {
@@ -74,6 +87,10 @@ public class Photo implements Serializable {
 
     public String getPhotoName() {
         return photoName;
+    }
+
+    public Bitmap getImage() {
+        return image;
     }
 
     public void setPhotoName(String photoName) {

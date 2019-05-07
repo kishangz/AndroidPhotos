@@ -46,6 +46,6 @@ public class Tag implements Serializable {
     }
 
     public String toString() {
-        return this.type + ":" + this.value;
+        return this.type + ": " + this.value;
     }
 }

@@ -31,7 +31,9 @@ public class Photos extends AppCompatActivity {
     //private ListView listView;
     private ListView albumsListView;
     //public static ArrayList<Album> albums = new ArrayList<>();
-    private static ArrayList<Album> albumList = new ArrayList<>();
+    //private static ArrayList<Album> albumList = new ArrayList<>();
+
+    public static ArrayList<Album> albumList = new ArrayList<Album>();
     public static Album selectedAlbum = null;
     private ArrayAdapter<Album> albumArrayAdapter;
 

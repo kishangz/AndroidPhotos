@@ -25,8 +25,12 @@ public class ShowAlbum extends AppCompatActivity {
 
     //public static ArrayList<Photo> photos = Photos.album.getListOfPhotos();
     public static ArrayList<Photo> photos = Photos.selectedAlbum.getListOfPhotos();
-    private Photo selectedPhoto;
-    private Album thisAlbum;
+
+    //private Photo selectedPhoto;
+    //private Album thisAlbum;
+
+    public static Photo selectedPhoto = null;
+
 
     private static final int IMAGE_REQUEST_CODE = 1;
 
@@ -52,44 +56,12 @@ public class ShowAlbum extends AppCompatActivity {
         GridView grid = findViewById(R.id.grid);
         GridAdapter image = new GridAdapter(ShowAlbum.this);
         grid.setAdapter(image);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.album_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
-
-            case R.id.deletePhoto:
-
-                //deletePhotoDialog();
-
-                break;
-            case R.id.displayItem:
-                openAlbum();
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void openAlbum() {
-        if(selectedPhoto!=null) {
-            //Intent openIntent = new Intent(getApplicationContext(), DisplayActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("selected_photo",selectedPhoto);
-            bundle.putSerializable("album", thisAlbum);
-            bundle.putSerializable("album_list", photos);
-            //openIntent.putExtras(bundle);
-            //startActivity(openIntent);
-        }
+        grid.setOnItemClickListener(
+                (parent,view,pos,id) -> {
+                    selectedPhoto = photos.get(pos);
+                    Intent intent = new Intent(this, ShowPhotos.class);
+                    startActivity(intent);
+                });
     }
 
     @Override

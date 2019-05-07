@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -55,6 +56,8 @@ public class Photos extends AppCompatActivity {
         albumsListView = (ListView) findViewById(R.id.albumsListView);
         albumsListView.setAdapter(albumArrayAdapter);
         albumsListView.setOnItemClickListener( (p,v,pos,id) -> selectAlbum(pos) );
+
+        registerForContextMenu(albumsListView);
 
     }
 
@@ -101,11 +104,54 @@ public class Photos extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.setHeaderTitle("Rename or Delete");
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home_config_menu, menu);
+
+        menu.setHeaderTitle("Rename Or Delete");
+        //getMenuInflater().inflate(R.menu.home_menu, menu);
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
 
+            case R.id.deleteItem: // User pressed delete
+                deleteAlbumDialog();
+                break;
+            case R.id.renameItem: // User pressed rename
+                renameAlbumDialog();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.addItem: // User pressed add
+                createAlbumDialog();
+                break;
+            case R.id.searchItem: // User pressed search
+                if(albumList.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "You have no albums", Toast.LENGTH_LONG).show();
+                    break;
+                }
+                searchAlbums();
+                break;
+            case R.id.openItem: // User pressed open
+                if(selectedAlbum == null) {
+                    noAlbumSelectedDialog();
+                    break;
+                }
+                openAlbum();
+                break;
+        }
+        // Not sure if this is needed
+        return super.onOptionsItemSelected(item);
+    }
+
+/*
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
@@ -145,6 +191,8 @@ public class Photos extends AppCompatActivity {
         // Not sure if this is needed
         return super.onOptionsItemSelected(item);
     }
+    */
+
 
     private void openAlbum() {
         Intent openIntent = new Intent(getApplicationContext(), ShowAlbum.class);

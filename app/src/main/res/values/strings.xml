@@ -2,4 +2,5 @@
     <string name="app_name">Photos</string>
     <string name="title_activity_show_album">Photos</string>
     <string name="title_activity_show_photos">Photos</string>
+    <string name="title_activity_search">Search</string>
 </resources>

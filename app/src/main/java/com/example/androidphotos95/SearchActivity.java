@@ -58,7 +58,7 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.searchItem2:
+            case R.id.app_bar_search:
                 searchDialog();
         }
         return super.onOptionsItemSelected(item);
